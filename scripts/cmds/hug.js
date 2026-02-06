@@ -17,21 +17,19 @@ module.exports = {
     guide: "{pn} @mention or reply to a message",
   },
 
-  onStart: async function ({ event, api, usersData, args }) {
-    try {
-      // Send a processing message
-      const processingMsg = await api.sendMessage("🔄 Preparing a warm hug for you...", event.threadID);
+  onStart: async function ({ event, api, usersData, args, resolveTargetID }) {
 
-      const targetID = resolveTargetID(event, args);
+  const targetID = resolveTargetID(args, event);
 
-if (!targetID) {
-  await api.sendMessage(
-    "💝 Who would you like to hug? Please tag someone or reply to their message!",
-    event.threadID,
-    event.messageID
-  );
-  await api.unsendMessage(processingMsg.messageID);
-  return;
+  if (!targetID) {
+    await api.sendMessage(
+      "💝 Who would you like to hug? Please tag someone or reply to their message!",
+      event.threadID,
+      event.messageID
+    );
+    return;
+  }
+
 }
       if (!targetID) {
         await api.sendMessage("💝 Who would you like to hug? Please tag someone or reply to their message!", event.threadID, event.messageID);
