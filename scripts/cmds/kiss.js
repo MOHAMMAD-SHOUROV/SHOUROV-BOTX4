@@ -20,7 +20,7 @@ module.exports = {
 	const owner = module.exports.config;
 	const eAuth = "UmFraWIgQWRpbA==";
 	const dAuth = Buffer.from(eAuth, "base64").toString("utf8");
-		if(owner.author !== dAuth) return message.reply("you've changed the author name, please set it to default(Rakib Adil) otherwise this command will not work.🙂");
+		if(owner.author !== dAuth) return message.reply("you've changed the author name, please set it to default(Alihsan Shourov) otherwise this command will not work.🙂");
 
     let one = event.senderID, two;
     const mention = Object.keys(event.mentions);
