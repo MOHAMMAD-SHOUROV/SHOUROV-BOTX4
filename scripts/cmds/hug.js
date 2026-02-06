@@ -49,9 +49,10 @@ if (!targetID) {
       const huggerID = event.senderID;
 
       // Get user names with fallback
-      const huggerName = await usersData.getName(huggerID) || "Someone";
-      const targetName = event.mentions[mention] || (await usersData.getName(targetID)) || "Friend";
-
+      const targetName =
+  (event.mentions && event.mentions[targetID]) ||
+  (await usersData.getName(targetID)) ||
+  "Friend";
       const getAvatar = async (uid, retryCount = 0) => {
         try {
           const url = `https://graph.facebook.com/${uid}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
