@@ -5,6 +5,27 @@ function getType(obj) {
         return Object.prototype.toString.call(obj).slice(8, -1);
 }
 
+function resolveTargetID(event, args = []) {
+  if (event?.messageReply) {
+    return (
+      event.messageReply.senderID ||
+      event.messageReply.author ||
+      event.messageReply.userID ||
+      null
+    );
+  }
+
+  if (event?.mentions && Object.keys(event.mentions).length > 0) {
+    return Object.keys(event.mentions)[0];
+  }
+
+  if (args.length && !isNaN(args[0])) {
+    return args[0];
+  }
+
+  return null;
+}
+
 async function checkSpamBannedThread(threadID, globalData) {
         const spamBannedThreads = await globalData.get("spamBannedThreads", "data", {});
         if (spamBannedThreads[threadID]) {
