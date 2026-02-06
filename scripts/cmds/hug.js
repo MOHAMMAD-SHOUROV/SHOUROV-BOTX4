@@ -22,9 +22,17 @@ module.exports = {
       // Send a processing message
       const processingMsg = await api.sendMessage("🔄 Preparing a warm hug for you...", event.threadID);
 
-      let mention = Object.keys(event.mentions)[0];
-      let targetID = mention || event.messageReply?.senderID;
+      const targetID = resolveTargetID(event, args);
 
+if (!targetID) {
+  await api.sendMessage(
+    "💝 Who would you like to hug? Please tag someone or reply to their message!",
+    event.threadID,
+    event.messageID
+  );
+  await api.unsendMessage(processingMsg.messageID);
+  return;
+}
       if (!targetID) {
         await api.sendMessage("💝 Who would you like to hug? Please tag someone or reply to their message!", event.threadID, event.messageID);
         await api.unsendMessage(processingMsg.messageID);
