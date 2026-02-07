@@ -1,4 +1,4 @@
-const { getStreamFromURL } = global.utils;
+>cmd install themea.js const { getStreamFromURL } = global.utils;
 
 module.exports = {
   config: {
