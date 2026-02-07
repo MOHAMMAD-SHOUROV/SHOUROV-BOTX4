@@ -51,12 +51,13 @@ module.exports = {
     },
   },
 
-  onStart: async function ({ api, event }) {
+  onStart: async function ({ api, event, args, resolveTargetID }) {
     try {
       let pathImg = __dirname + "/tmp/background.png";
       let pathAvt1 = __dirname + "/tmp/Avtmot.png";
 
-      var id = Object.keys(event.mentions)[0] || event.senderID;
+      var id = resolveTargetID(args);
+      if (!id) id = event.senderID;
       var nameInfo = await api.getUserInfo(id);
       var name = nameInfo[id].name;
 

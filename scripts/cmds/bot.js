@@ -138,7 +138,8 @@ module.exports = {
 
   
   onReply: async ({ api, event, Reply }) => {
-    const { threadID, messageID, senderID, body } = event;
+    let { threadID, messageID, senderID, body } = event;
+    if (typeof body !== "string") body = "";
     if (Reply.author !== senderID) return;
 
     try {

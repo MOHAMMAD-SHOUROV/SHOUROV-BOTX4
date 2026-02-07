@@ -260,6 +260,7 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
                 let { hideNotiMessage = {} } = config;
 
                 let { body, messageID, threadID, isGroup } = event;
+                if (typeof body !== "string") body = "";
 
                 // Check if has threadID
                 if (!threadID)

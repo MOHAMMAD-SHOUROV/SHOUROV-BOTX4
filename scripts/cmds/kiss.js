@@ -11,25 +11,21 @@ module.exports = {
     longDescription: "{p}kiss @mention or reply someone you want to kiss that person 😚",
     category: "funny",
     guide: "{p}kiss and mention someone you want to kiss 🥴",
-	 usePrefix : true,//you can use this cmd to no prefix, just set the true to false.
-	 premium: false,
+         usePrefix : true,//you can use this cmd to no prefix, just set the true to false.
+         premium: false,
     notes : " If you change the author then the command will not work and not usable"
   },
 
   onStart: async function ({ api, message, event, usersData }) {
-	const owner = module.exports.config;
-	const eAuth = "UmFraWIgQWRpbA==";
-	const dAuth = Buffer.from(eAuth, "base64").toString("utf8");
-		if(owner.author !== dAuth) return message.reply("you've changed the author name, please set it to default(Alihsan Shourov) otherwise this command will not work.🙂");
+        const owner = module.exports.config;
+        const eAuth = "UmFraWIgQWRpbA==";
+        const dAuth = Buffer.from(eAuth, "base64").toString("utf8");
+                if(owner.author !== dAuth) return message.reply("you've changed the author name, please set it to default(Alihsan Shourov) otherwise this command will not work.🙂");
 
-    let one = event.senderID, two;
-    const mention = Object.keys(event.mentions);
-    if(mention.length > 0){
-        two = mention[0];
-    }else if(event.type === "message_reply"){
-        two = event.messageReply.senderID;
-    }else{
+    let one = event.senderID, two = resolveTargetID(args);
+    if (!two) {
         message.reply("please mention or reply someone message to kiss him/her 🌚")
+        return;
     };
 
     try {

@@ -25,18 +25,18 @@ module.exports = {
  }
  },
 
- onStart: async function ({ event, message, usersData, args, getLang }) {
- const uid1 = event.senderID;
- const uid2 = Object.keys(event.mentions)[0];
- if (!uid2)
- return message.reply(getLang("noTag"));
- const avatarURL1 = await usersData.getAvatarUrl(uid1);
- const avatarURL2 = await usersData.getAvatarUrl(uid2);
- const img = await new DIG.Batslap().getImage(avatarURL1, avatarURL2);
- const pathSave = `${__dirname}/tmp/${uid1}_${uid2}Batslap.png`;
- fs.writeFileSync(pathSave, Buffer.from(img));
- const content = args.join(' ').replace(Object.keys(event.mentions)[0], "");
- message.reply({
+    onStart: async function ({ event, message, usersData, args, getLang, resolveTargetID }) {
+      const uid1 = event.senderID;
+      const uid2 = resolveTargetID(args);
+      if (!uid2)
+        return message.reply(getLang("noTag"));
+      const avatarURL1 = await usersData.getAvatarUrl(uid1);
+      const avatarURL2 = await usersData.getAvatarUrl(uid2);
+      const img = await new DIG.Batslap().getImage(avatarURL1, avatarURL2);
+      const pathSave = `${__dirname}/tmp/${uid1}_${uid2}Batslap.png`;
+      fs.writeFileSync(pathSave, Buffer.from(img));
+      const content = args.join(' ').replace(/@[^ ]+/g, ""); // Simplified tag removal
+      message.reply({
  body: `${(content || "Bópppp 😵‍💫😵")}`,
  attachment: fs.createReadStream(pathSave)
  }, () => fs.unlinkSync(pathSave));

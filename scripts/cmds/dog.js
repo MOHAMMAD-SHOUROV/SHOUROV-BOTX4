@@ -16,8 +16,13 @@ module.exports = {
  guide: { en: "+dog" }
  },
 
- onStart: async function ({ message }) {
- const res = await axios.get("https://dog.ceo/api/breeds/image/random");
+ onStart: async function ({ message, event, args, resolveTargetID }) {
+   const targetID = resolveTargetID(args);
+   // The original dog command didn't use mentions, but following instructions to update it.
+   // If a targetID is provided (mention or reply), we could potentially do something with it,
+   // but the instructions just say "Update these command files ONLY to use the helper: ... dog.js"
+   // and "Inside commands, use ONLY this: const targetID = resolveTargetID(args);"
+   const res = await axios.get("https://dog.ceo/api/breeds/image/random");
  const url = res.data.message;
  const cachePath = path.join(__dirname, "cache/dog.jpg");
 

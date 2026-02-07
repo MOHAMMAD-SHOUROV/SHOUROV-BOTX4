@@ -26,7 +26,7 @@ module.exports = {
         event.threadID
       );
 
-      const targetID = resolveTargetID(args, event);
+      const targetID = resolveTargetID(args);
 
       if (!targetID) {
         await api.sendMessage(
