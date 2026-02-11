@@ -43,23 +43,23 @@ module.exports = {
       const avatar1 = await loadImage(avatarURL1);
       const avatar2 = await loadImage(avatarURL2);
 
-      // ===== LEFT USER (BOY) =====
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(430, 540, 210, 0, Math.PI * 2); // Position + Radius
-      ctx.closePath();
-      ctx.clip();
-      ctx.drawImage(avatar1, 220, 330, 420, 420);
-      ctx.restore();
+      // ===== LEFT USER =====
+ctx.save();
+ctx.beginPath();
+ctx.arc(420, 500, 175, 0, Math.PI * 2); // position + radius
+ctx.closePath();
+ctx.clip();
+ctx.drawImage(avatar1, 245, 325, 350, 350);
+ctx.restore();
 
-      // ===== RIGHT USER (GIRL) =====
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(1010, 540, 210, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
-      ctx.drawImage(avatar2, 800, 330, 420, 420);
-      ctx.restore();
+// ===== RIGHT USER =====
+ctx.save();
+ctx.beginPath();
+ctx.arc(1020, 500, 175, 0, Math.PI * 2);
+ctx.closePath();
+ctx.clip();
+ctx.drawImage(avatar2, 845, 325, 350, 350);
+ctx.restore();
 
       // ===== TEMP FOLDER =====
       const tmpDir = path.join(__dirname, "tmp");
