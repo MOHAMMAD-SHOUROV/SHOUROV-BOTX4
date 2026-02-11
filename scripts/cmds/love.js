@@ -45,28 +45,22 @@ module.exports = {
       const size = radius * 2;
 
       // LEFT PROFILE CENTER POSITION
-      const leftX = 420;
-      const leftY = 430;
-
       ctx.save();
-      ctx.beginPath();
-      ctx.arc(leftX, leftY, radius, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
-      ctx.drawImage(avatar1, leftX - radius, leftY - radius, size, size);
-      ctx.restore();
+ctx.beginPath();
+ctx.arc(1020, 430, 150, 0, Math.PI * 2);
+ctx.closePath();
+ctx.clip();
+ctx.drawImage(avatar2, 870, 280, 300, 300);
+ctx.restore();
 
       // RIGHT PROFILE CENTER POSITION
-      const rightX = 1030;
-      const rightY = 430;
-
       ctx.save();
-      ctx.beginPath();
-      ctx.arc(rightX, rightY, radius, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
-      ctx.drawImage(avatar2, rightX - radius, rightY - radius, size, size);
-      ctx.restore();
+ctx.beginPath();
+ctx.arc(420, 430, 150, 0, Math.PI * 2); 
+ctx.closePath();
+ctx.clip();
+ctx.drawImage(avatar1, 270, 280, 300, 300);
+ctx.restore();
 
       // Save File
       const tmpDir = path.join(__dirname, "tmp");
