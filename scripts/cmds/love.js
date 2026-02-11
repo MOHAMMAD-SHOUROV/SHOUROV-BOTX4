@@ -44,22 +44,23 @@ module.exports = {
       const radius = 165; // circle size
       const size = radius * 2;
 
-      // LEFT PROFILE (Move Left)
+      // LEFT PROFILE
 ctx.save();
 ctx.beginPath();
-ctx.arc(250, 360, 160, 0, Math.PI * 2);   // 330 → 250
+ctx.arc(320, 370, 160, 0, Math.PI * 2);  
 ctx.closePath();
 ctx.clip();
-ctx.drawImage(avatar1, 90, 200, 320, 320); // 170 → 90
+ctx.drawImage(avatar1, 160, 210, 320, 320);
 ctx.restore();
 
-// RIGHT PROFILE (Move Right)
+
+// RIGHT PROFILE
 ctx.save();
 ctx.beginPath();
-ctx.arc(1000, 360, 160, 0, Math.PI * 2);   // 900 → 1000
+ctx.arc(940, 370, 160, 0, Math.PI * 2);
 ctx.closePath();
 ctx.clip();
-ctx.drawImage(avatar2, 840, 200, 320, 320); // 740 → 840
+ctx.drawImage(avatar2, 780, 210, 320, 320);
 ctx.restore();
 
    // Save File
