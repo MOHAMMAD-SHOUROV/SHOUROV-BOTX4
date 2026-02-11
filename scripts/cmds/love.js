@@ -44,22 +44,25 @@ module.exports = {
       const radius = 165; // circle size
       const size = radius * 2;
 
-      // LEFT PROFILE (Up + Left)
+      // RIGHT PROFILE (More Up + More Left)
 ctx.save();
 ctx.beginPath();
-ctx.arc(390, 390, 160, 0, Math.PI * 2); // center moved up + left
+ctx.arc(900, 330, 160, 0, Math.PI * 2);   // 970 → 900 (left) | 390 → 330 (up)
 ctx.closePath();
 ctx.clip();
-ctx.drawImage(avatar1, 230, 230, 320, 320);
+ctx.drawImage(avatar2, 740, 170, 320, 320); // 810 → 740 | 230 → 170
 ctx.restore();
-      // RIGHT PROFILE (Up + Left)
+
+
+// LEFT PROFILE (More Up + More Left)
 ctx.save();
 ctx.beginPath();
-ctx.arc(970, 390, 160, 0, Math.PI * 2);
+ctx.arc(330, 330, 160, 0, Math.PI * 2);   // 390 → 330 | 390 → 330
 ctx.closePath();
 ctx.clip();
-ctx.drawImage(avatar2, 810, 230, 320, 320);
+ctx.drawImage(avatar1, 170, 170, 320, 320); // 230 → 170 | 230 → 170
 ctx.restore();
+
       // Save File
       const tmpDir = path.join(__dirname, "tmp");
       if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir);
