@@ -42,7 +42,7 @@ module.exports.onStart = async function({ api, args, Users, event }) {
     }
 
     const mention = Object.keys(event.mentions)[0];
-    if (!mention) return api.sendMessage("বস আরিয়ান খানকিরপুলারে একটা মেনশন দেন-!!🫂", event.threadID);
+    if (!mention) return api.sendMessage("বস সৌরভ খানকিরপুলারে একটা মেনশন দেন-!!🫂", event.threadID);
 
     const name = event.mentions[mention];
     
@@ -51,7 +51,7 @@ module.exports.onStart = async function({ api, args, Users, event }) {
     
     const send = (msg) => { api.sendMessage(msg, event.threadID); };
 
-    send("তোরে চুদলো আরিয়ান বস 🥵");
+    send("তোরে চুদলো সৌরভ বস 🥵");
 
     setTimeout(() => {send({body: "ভোদাই জানে চোদার মজা তোর মাকে জিজ্ঞেস কর কেমন দিছিলাম চোদা 🥰।" + " নিশি রাতে তোর মাকে চুদে পেয়েছিলাম অনেক আনন্দ।🤩✊🏻 " + name, mentions: arraytag})}, 3000);
     setTimeout(() => {send({body: "খাংকির পোলা তর কচি বোন রে চুদি 😍.." + " " + name, mentions: arraytag})}, 5000);
