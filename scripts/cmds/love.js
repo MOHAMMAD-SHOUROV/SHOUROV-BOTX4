@@ -5,38 +5,35 @@ const path = require("path");
 module.exports = {
   config: {
     name: "love",
-    aliases: ["lovecouple"],
-    version: "2.0.0",
+    version: "4.1.0",
     author: "Alihsan Shourov",
     countDown: 5,
     role: 0,
-    description: "Make love photo with mention or reply",
     category: "fun",
     guide: "{p}love @mention OR reply someone"
   },
 
-  onStart: async function ({ message, event, usersData }) {
+  onStart: async function ({ message, event }) {
     try {
-      const { senderID } = event;
-
-      // ===== Get Target =====
-      const targetID =
+      const one = event.senderID;
+      const two =
         event.messageReply?.senderID ||
         Object.keys(event.mentions || {})[0];
 
-      if (!targetID)
-        return message.reply("💚 Please mention or reply someone you love!");
+      if (!two)
+        return message.reply("💚 Please mention or reply someone!");
 
-      // ===== Get Avatar URLs =====
-      const avatar1 = await usersData.getAvatarUrl(senderID);
-      const avatar2 = await usersData.getAvatarUrl(targetID);
+      // ===== Graph API Avatar =====
+      const avone = await jimp.read(
+        `https://graph.facebook.com/${one}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`
+      );
 
-      // ===== Read Images =====
-      const avOne = await jimp.read(avatar1);
-      const avTwo = await jimp.read(avatar2);
+      const avtwo = await jimp.read(
+        `https://graph.facebook.com/${two}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`
+      );
 
-      avOne.circle();
-      avTwo.circle();
+      avone.circle();
+      avtwo.circle();
 
       const background = await jimp.read(
         "https://i.imgur.com/LjpG3CW.jpeg"
@@ -44,31 +41,27 @@ module.exports = {
 
       background
         .resize(1440, 1080)
-        .composite(avOne.resize(470, 470), 125, 210)
-        .composite(avTwo.resize(470, 470), 800, 200);
+        .composite(avone.resize(470, 470), 125, 210)
+        .composite(avtwo.resize(470, 470), 800, 200);
 
-      // ===== Temp Folder =====
       const tmpDir = path.join(__dirname, "tmp");
       if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir);
 
-      const outputPath = path.join(
-        tmpDir,
-        `love_${Date.now()}.png`
-      );
+      const filePath = path.join(tmpDir, `love_${Date.now()}.png`);
 
-      await background.writeAsync(outputPath);
+      await background.writeAsync(filePath);
 
       message.reply(
         {
-          body: "❤️ Love is beautiful... 💔🥀",
-          attachment: fs.createReadStream(outputPath)
+          body: "❤️ Love is beautiful 💞",
+          attachment: fs.createReadStream(filePath)
         },
-        () => fs.unlinkSync(outputPath)
+        () => fs.unlinkSync(filePath)
       );
 
-    } catch (error) {
-      console.error(error);
-      message.reply("⚠️ Something went wrong. Try again later.");
+    } catch (err) {
+      console.log("LOVE ERROR:", err);
+      message.reply("⚠️ Love command error.");
     }
   }
 };
