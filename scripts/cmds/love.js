@@ -44,24 +44,22 @@ module.exports = {
       const radius = 165; // circle size
       const size = radius * 2;
 
-      // LEFT PROFILE CENTER POSITION
-      ctx.save();
+      // LEFT PROFILE PERFECT CENTER
+ctx.save();
 ctx.beginPath();
-ctx.arc(1020, 430, 150, 0, Math.PI * 2);
+ctx.arc(430, 430, 160, 0, Math.PI * 2); // circle center
 ctx.closePath();
 ctx.clip();
-ctx.drawImage(avatar2, 870, 280, 300, 300);
+ctx.drawImage(avatar1, 270, 270, 320, 320); // image center matched
 ctx.restore();
-
-      // RIGHT PROFILE CENTER POSITION
-      ctx.save();
+      // RIGHT PROFILE PERFECT CENTER
+ctx.save();
 ctx.beginPath();
-ctx.arc(420, 430, 150, 0, Math.PI * 2); 
+ctx.arc(1010, 430, 160, 0, Math.PI * 2); 
 ctx.closePath();
 ctx.clip();
-ctx.drawImage(avatar1, 270, 280, 300, 300);
+ctx.drawImage(avatar2, 850, 270, 320, 320);
 ctx.restore();
-
       // Save File
       const tmpDir = path.join(__dirname, "tmp");
       if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir);
