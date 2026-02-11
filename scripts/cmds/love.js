@@ -13,7 +13,7 @@ module.exports = {
     guide: "{p}love @mention OR reply someone"
   },
 
-  onStart: async function ({ message, event }) {
+  onStart: async function ({ message, event, usersData }) {
     try {
       const one = event.senderID;
       const two =
@@ -23,18 +23,30 @@ module.exports = {
       if (!two)
         return message.reply("💚 Please mention or reply someone!");
 
-      // ✅ Avatar without access token
-      const avone = await jimp.read(
-        `https://graph.facebook.com/${one}/picture?width=512&height=512`
-      );
+      let avone, avtwo;
 
-      const avtwo = await jimp.read(
-        `https://graph.facebook.com/${two}/picture?width=512&height=512`
-      );
+      // ===== TRY GRAPH API FIRST =====
+      try {
+        avone = await jimp.read(
+          `https://graph.facebook.com/${one}/picture?height=512&access_token=6628568379|c1e620fa708a1d5696fb991c1bde5662`
+        );
+
+        avtwo = await jimp.read(
+          `https://graph.facebook.com/${two}/picture?height=512&access_token=6628568379|c1e620fa708a1d5696fb991c1bde5662`
+        );
+      } catch (err) {
+        // ===== FALLBACK SYSTEM =====
+        const avatar1 = await usersData.getAvatarUrl(one);
+        const avatar2 = await usersData.getAvatarUrl(two);
+
+        avone = await jimp.read(avatar1);
+        avtwo = await jimp.read(avatar2);
+      }
 
       avone.circle();
       avtwo.circle();
 
+      // ===== BACKGROUND =====
       const background = await jimp.read(
         "https://i.imgur.com/LjpG3CW.jpeg"
       );
@@ -44,6 +56,7 @@ module.exports = {
         .composite(avone.resize(470, 470), 125, 210)
         .composite(avtwo.resize(470, 470), 800, 200);
 
+      // ===== TMP FOLDER =====
       const tmpDir = path.join(__dirname, "tmp");
       if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir);
 
@@ -51,18 +64,17 @@ module.exports = {
 
       await background.writeAsync(filePath);
 
-      await message.reply(
+      message.reply(
         {
           body: "❤️ Love is beautiful 💞",
           attachment: fs.createReadStream(filePath)
-        }
+        },
+        () => fs.unlinkSync(filePath)
       );
-
-      fs.unlinkSync(filePath);
 
     } catch (err) {
       console.log("LOVE ERROR:", err);
-      message.reply("⚠️ Love command error. Check console.");
+      message.reply("⚠️ Love command error.");
     }
   }
 };
