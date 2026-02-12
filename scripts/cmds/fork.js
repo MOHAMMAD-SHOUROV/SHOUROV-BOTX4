@@ -15,13 +15,13 @@ module.exports = {
 ╭━━〔 🚀 SHOUROV BOT OFFICIAL FORK 〕━━╮
 
 🔰 GitHub Repository (Fork Here)
-👉 https://github.com/MOHAMMAD-SHOUROV/SHOUROV-BOTV2
+👉 fork চাইলে বিচি কান্দে তুলে দিবো, 
 
 🌐 Facebook Profile
-👉 https://www.facebook.com/www.xsxx.com365
+👉 https://www.facebook.com/profile.php?id=61588161951831
 
 💎 GitHub Profile
-👉 https://github.com/MOHAMMAD-SHOUROV
+👉 https://giমনে নাই তার পর
 
 ╰━━━━━━━━━━━━━━━━━━━━━━╯
 `.trim();
