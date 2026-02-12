@@ -40,7 +40,7 @@ module.exports = {
 
  steps.push(`✅ Result:\n➤ ${finalResult}`);
  steps.push("━━━━━━━━━━━━━━━━━━━━");
- steps.push("🤖 Powered by Shipu Ai");
+ steps.push("🤖 Powered by Shourov Ai");
 
  message.reply(steps.join("\n\n"));
  } catch (err) {
