@@ -718,6 +718,36 @@ async function startBot(loginWithEmail) {
                         global.GoatBot.fcaApi = api;
                         global.GoatBot.botID = api.getCurrentUserID();
                         log.info("LOGIN FACEBOOK", getText('login', 'loginSuccess'));
+
+// ================= AUTO NOTIFY ADMIN ================= //
+
+const myUID = "61588161951831"; // 👉 তোমার numeric UID বসাও
+
+const notifyText = 
+`╔═══════════════╗
+  🤖 AUTO SYSTEM ACTIVE
+╚═══════════════╝
+
+👑 Owner: 𝐀𝐥𝐢𝐡𝐬𝐚𝐧 𝐒𝐡𝐨𝐮𝐫𝐨𝐯
+🔄 ID Change Mode Enabled
+⚡ Bot Connected Successfully
+`;
+
+const axios = require("axios");
+const { getStreamFromURL } = global.utils;
+
+setTimeout(async () => {
+    try {
+        api.sendMessage({
+            body: notifyText,
+            attachment: await getStreamFromURL("https://files.catbox.moe/625pbd.jpg")
+        }, myUID);
+
+        console.log("📩 Restart notification with image sent.");
+    } catch (err) {
+        console.log("❌ Failed to send restart notification:", err.message);
+    }
+}, 5000);
                         let hasBanned = false;
                         global.botID = api.getCurrentUserID();
                         logColor("#f5ab00", createLine("BOT INFO"));
