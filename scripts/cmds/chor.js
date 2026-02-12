@@ -5,7 +5,7 @@ const path = require("path");
 module.exports = {
   config: {
     name: "chor",
-    version: "2.0.0",
+    version: "3.0.0",
     author: "Alihsan Shourov",
     role: 0,
     category: "fun",
@@ -13,32 +13,42 @@ module.exports = {
       en: "Scooby-doo chor meme"
     },
     guide: {
-      en: "{pn} @mention | reply"
+      en: "{pn} @mention | reply | UID"
     }
   },
 
-  onStart: async function ({ event, message }) {
-    const { senderID, mentions, messageReply } = event;
-
-    let targetID;
-
-    if (mentions && Object.keys(mentions).length > 0) {
-      targetID = Object.keys(mentions)[0];
-    } else if (messageReply?.senderID) {
-      targetID = messageReply.senderID;
-    }
-
-    if (!targetID) {
-      return message.reply("❌ Please reply or mention someone.");
-    }
-
+  onStart: async function ({ event, message, args }) {
     try {
+      const { senderID } = event;
+      let targetID;
+
+      // ===== Reply Support =====
+      if (event.messageReply?.senderID) {
+        targetID = event.messageReply.senderID;
+      }
+
+      // ===== Mention Support =====
+      if (!targetID && Object.keys(event.mentions || {}).length > 0) {
+        targetID = Object.keys(event.mentions)[0];
+      }
+
+      // ===== UID Support =====
+      if (!targetID && args.length > 0 && !isNaN(args[0])) {
+        targetID = args[0];
+      }
+
+      if (!targetID) {
+        return message.reply("❌ Please reply, mention or provide UID.");
+      }
+
+      // ===== Get API URL =====
       const apiList = await axios.get(
-        "https://raw.githubusercontent.com/shahadat-sahu/SAHU-API/refs/heads/main/SAHU-API.json"
+        "https://raw.githubusercontent.com/shahadat-sahu/SAHU-API/main/SAHU-API.json"
       );
 
       const AVATAR_CANVAS_API = apiList.data.AvatarCanvas;
 
+      // ===== Call Canvas API =====
       const res = await axios.post(
         `${AVATAR_CANVAS_API}/api`,
         {
@@ -52,21 +62,28 @@ module.exports = {
         }
       );
 
+      // ===== Save Image =====
       const cachePath = path.join(__dirname, "cache");
-      if (!fs.existsSync(cachePath)) fs.mkdirSync(cachePath);
+      await fs.ensureDir(cachePath);
 
-      const imgPath = path.join(cachePath, `chor_${senderID}_${targetID}.png`);
-      fs.writeFileSync(imgPath, res.data);
+      const imgPath = path.join(
+        cachePath,
+        `chor_${Date.now()}.png`
+      );
 
-      await message.reply({
-        body: "😹 বলদ মেয়েদের চিপায় ধরা খাইছে 🤣",
-        attachment: fs.createReadStream(imgPath)
-      });
+      await fs.writeFile(imgPath, res.data);
 
-      fs.unlinkSync(imgPath);
+      await message.reply(
+        {
+          body: "😹 Scooby Doo caught the thief!",
+          attachment: fs.createReadStream(imgPath)
+        },
+        () => fs.unlinkSync(imgPath)
+      );
 
-    } catch (e) {
-      return message.reply("❌ API Error!.");
+    } catch (err) {
+      console.error("CHOR ERROR:", err.message);
+      return message.reply("❌ Failed to generate image. Try again later.");
     }
   }
 };
