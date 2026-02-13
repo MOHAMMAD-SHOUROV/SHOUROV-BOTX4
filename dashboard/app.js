@@ -234,6 +234,10 @@ module.exports = async (api) => {
                 });
         });
 
+app.get("/neon", isAuthenticated, isAdmin, (req, res) => {
+    res.render("neonDashboard");
+});
+
         app.use("/register", registerRoute);
         app.use("/login", loginRoute);
         app.use("/forgot-password", forgotPasswordRoute);
