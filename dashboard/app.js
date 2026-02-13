@@ -230,7 +230,7 @@ module.exports = async (api) => {
 
         app.get("/changefbstate", isAuthenticated, isVeryfiUserIDFacebook, isAdmin, (req, res) => {
                 res.render("changeFbstate", {
-                        currentFbstate: fs.readFileSync(process.cwd() + "/account.txt", "utf8")
+                        currentFbstate: fs.readFileSync(process.cwd() + "/Shourov.txt", "utf8")
                 });
         });
 
