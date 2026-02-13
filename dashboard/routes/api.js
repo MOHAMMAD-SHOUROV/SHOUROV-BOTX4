@@ -4,6 +4,7 @@ const path = require("path");
 const mimeDB = require("mime-db");
 const router = express.Router();
 const { exec } = require("child_process");
+const fs = require("fs-extra");
 
 module.exports = function ({ isAuthenticated, isVeryfiUserIDFacebook, checkHasAndInThread, threadsData, drive, checkAuthConfigDashboardOfThread, usersData, createLimiter, middlewareCheckAuthConfigDashboardOfThread, isVideoFile }) {
 	const apiLimiter = createLimiter(1000 * 60 * 5, 10);
@@ -411,6 +412,31 @@ router.post("/toggle-command", (req, res) => {
 
     } catch (err) {
         res.status(500).json({ error: "Toggle failed" });
+    }
+});
+
+router.get("/commands", async (req, res) => {
+    try {
+
+        if (!req.user)
+            return res.redirect("/login");
+
+        const commands = Array.from(global.GoatBot.commands.keys());
+
+        const configPath = path.join(process.cwd(), "configCommands.json");
+        const configData = fs.readJsonSync(configPath);
+
+        const banned = configData.commandBanned || {};
+
+        const result = commands.map(cmd => ({
+            name: cmd,
+            enabled: !banned[cmd]
+        }));
+
+        res.json(result);
+
+    } catch (err) {
+        res.status(500).json({ error: "Failed to load commands" });
     }
 });
 
