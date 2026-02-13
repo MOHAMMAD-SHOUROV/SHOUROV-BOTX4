@@ -797,20 +797,31 @@ if (global.GoatBot.config.facebookAccounts?.length > 1) {
 
 require("./autoJoin.js")(api);
 
-// ================= AUTO NOTIFY ADMIN ================= //
+// ================= OWNER AUTO NOTIFY ================= //
 
-const myUID = "61588161951831"; // 👉 তোমার numeric UID বসাও
+const ownerList = global.GoatBot.config.devUsers || [];
+const currentBotID = api.getCurrentUserID();
 
-const notifyText = 
-`╔═══════════════╗
-  🤖 AUTO SYSTEM ACTIVE
-╚═══════════════╝
+setTimeout(async () => {
+    try {
 
-👑 Owner: 𝐀𝐥𝐢𝐡𝐬𝐚𝐧 𝐒𝐡𝐨𝐮𝐫𝐨𝐯
-🔄 ID Change Mode Enabled
-⚡ Bot Connected Successfully
-`;
+        for (const uid of ownerList) {
 
+            await api.sendMessage(
+`🤖 BOT RESTARTED SUCCESSFULLY
+
+🆔 Bot ID: ${currentBotID}
+⚡ System Online`,
+                uid
+            );
+        }
+
+        console.log("✅ Restart notify sent to owner.");
+
+    } catch (err) {
+        console.log("❌ Restart notify error:", err.message);
+    }
+}, 5000);
 const axios = require("axios");
 const { getStreamFromURL } = global.utils;
 
