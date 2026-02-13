@@ -341,6 +341,25 @@ module.exports = function ({ isAuthenticated, isVeryfiUserIDFacebook, checkHasAn
 			}
 		})
 
+router.get("/commands", (req, res) => {
+    try {
+
+        const commands = Array.from(global.GoatBot.commands.keys());
+
+        const disabled = global.GoatBot.configCommands.commandBanned || [];
+
+        const result = commands.map(cmd => ({
+            name: cmd,
+            enabled: !disabled.includes(cmd)
+        }));
+
+        res.json(result);
+
+    } catch (err) {
+        res.status(500).json({ error: "Failed to load commands" });
+    }
+});
+
 router.get("/botinfo", async (req, res) => {
     try {
 
