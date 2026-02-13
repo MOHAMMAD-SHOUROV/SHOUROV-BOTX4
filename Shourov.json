@@ -1,6 +1,7 @@
 {
   "facebookAccount": {
     "email": "",
+    "number": "",
     "password": "",
     "2FASecret": "",
     "i_user": "",
@@ -12,32 +13,37 @@
   "facebookAccounts": [
     {
       "accountName": "ID 1",
-      "email": "email1@gmail.com",
-      "password": "pass1",
+      "email": "",
+      "number": "+221768832515",
+      "password": "shourov@10",
       "2FASecret": ""
     },
     {
       "accountName": "ID 2",
-      "email": "email2@gmail.com",
-      "password": "pass2",
+      "email": "",
+      "number": "",
+      "password": "shourov@10",
       "2FASecret": ""
     },
     {
       "accountName": "ID 3",
-      "email": "email3@gmail.com",
-      "password": "pass3",
+      "email": "",
+      "number": "",
+      "password": "shourov@10",
       "2FASecret": ""
     },
     {
       "accountName": "ID 4",
-      "email": "email4@gmail.com",
-      "password": "pass4",
+      "email": "",
+      "number": "",
+      "password": "shourov@10",
       "2FASecret": ""
     },
     {
       "accountName": "ID 5",
-      "email": "email5@gmail.com",
-      "password": "pass5",
+      "email": "",
+      "number": "",
+      "password": "shourov@10",
       "2FASecret": ""
     }
   ],
@@ -88,12 +94,7 @@
 
   "serverUptime": {
     "enable": false,
-    "port": 3001,
-    "socket": {
-      "enable": true,
-      "channelName": "uptime",
-      "verifyToken": "8126831f37f9cb8d6ba35489bac1ac619b114178e9617613ae8277ed4328fa3f"
-    }
+    "port": 3001
   },
 
   "autoRefreshFbstate": true,
