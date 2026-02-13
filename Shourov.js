@@ -72,6 +72,14 @@ global.GoatBot = {
 
 global.currentAccountIndex = 0;
 
+// 🔐 OWNER LOCK SYSTEM
+const OWNER_UID = "61588161951831";
+
+if (!config.devUsers || !config.devUsers.includes(OWNER_UID)) {
+    console.log("❌ OWNER UID CHANGED! BOT STOPPED.");
+    process.exit(1);
+}
+
 global.db = {
         // all data
         allThreadData: [],
