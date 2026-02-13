@@ -236,7 +236,7 @@ global.statusAccountBot = 'good';
 let changeFbStateByCode = false;
 let latestChangeContentAccount = fs.statSync(dirAccount).mtimeMs;
 let dashBoardIsRunning = false;
-
+global.currentAccountIndex = 0;
 
 async function getAppStateFromEmail(spin = { _start: () => { }, _stop: () => { } }, facebookAccount) {
         const { email, password, userAgent, proxy } = facebookAccount;
