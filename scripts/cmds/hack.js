@@ -5,7 +5,7 @@ const path = require("path");
 module.exports = {
   config: {
     name: "hack",
-    version: "5.0.0",
+    version: "5.1.0",
     author: "Alihsan Shourov (UID Edition)",
     countDown: 5,
     role: 0,
@@ -21,20 +21,13 @@ module.exports = {
       // ===== TARGET DETECT =====
       let targetID;
 
-      // UID support
       if (args[0] && !isNaN(args[0])) {
         targetID = args[0];
-      }
-      // Reply support
-      else if (event.messageReply?.senderID) {
+      } else if (event.messageReply?.senderID) {
         targetID = event.messageReply.senderID;
-      }
-      // Mention support
-      else if (Object.keys(event.mentions || {}).length > 0) {
+      } else if (Object.keys(event.mentions || {}).length > 0) {
         targetID = Object.keys(event.mentions)[0];
-      }
-      // Default self
-      else {
+      } else {
         targetID = senderID;
       }
 
@@ -52,46 +45,46 @@ module.exports = {
 
       const avatar = await loadImage(avatarURL);
 
-      // ===== ROUND AVATAR =====
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const radius = 140;
+      // ===============================
+      // 🔥 SQUARE AVATAR LEFT SIDE
+      // ===============================
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(centerX, centerY - 60, radius, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
+      const avatarSize = 200;     // ছোট করার জন্য
+      const avatarX = 80;         // বাম দিকে সরানো
+      const avatarY = 120;        // উপরে উঠানো
+
       ctx.drawImage(
         avatar,
-        centerX - radius,
-        centerY - 60 - radius,
-        radius * 2,
-        radius * 2
+        avatarX,
+        avatarY,
+        avatarSize,
+        avatarSize
       );
-      ctx.restore();
 
-      // Border
-      ctx.beginPath();
-      ctx.arc(centerX, centerY - 60, radius, 0, Math.PI * 2);
+      // Border (Square)
       ctx.lineWidth = 6;
       ctx.strokeStyle = "#00ff00";
-      ctx.stroke();
+      ctx.strokeRect(
+        avatarX,
+        avatarY,
+        avatarSize,
+        avatarSize
+      );
 
       // ===== TEXT =====
-      ctx.textAlign = "center";
+      ctx.textAlign = "left";
 
-      ctx.font = "bold 40px Arial";
+      ctx.font = "bold 45px Arial";
       ctx.fillStyle = "#00ff00";
-      ctx.fillText("SYSTEM BREACHED", centerX, canvas.height - 180);
+      ctx.fillText("SYSTEM BREACHED", avatarX + avatarSize + 60, 200);
 
-      ctx.font = "bold 28px Arial";
+      ctx.font = "bold 32px Arial";
       ctx.fillStyle = "#ffffff";
-      ctx.fillText(userName, centerX, canvas.height - 130);
+      ctx.fillText(userName, avatarX + avatarSize + 60, 260);
 
-      ctx.font = "bold 22px Arial";
+      ctx.font = "bold 26px Arial";
       ctx.fillStyle = "#ff0000";
-      ctx.fillText(`UID: ${targetID}`, centerX, canvas.height - 90);
+      ctx.fillText(`UID: ${targetID}`, avatarX + avatarSize + 60, 310);
 
       // ===== SAVE FILE =====
       const tmpDir = path.join(__dirname, "tmp");
