@@ -11,6 +11,9 @@ module.exports = function ({ isAuthenticated, isVeryfiUserIDFacebook, checkHasAn
 	router
 		.post("/delete/:slug", [isAuthenticated, isVeryfiUserIDFacebook, checkHasAndInThread, middlewareCheckAuthConfigDashboardOfThread, apiLimiter], async function (req, res) {
 			const { fileIDs, threadID, location } = req.body;
+if (!global.GoatBot.config.devUsers.includes(req.user?.facebookUserID)) {
+    return res.status(403).json({ error: "Not allowed" });
+}
 			if (!fileIDs || !fileIDs.length)
 				return res.status(400).send({
 					status: "error",
