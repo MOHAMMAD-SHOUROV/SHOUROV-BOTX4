@@ -795,6 +795,8 @@ if (global.GoatBot.config.facebookAccounts?.length > 1) {
                         global.GoatBot.botID = api.getCurrentUserID();
                         log.info("LOGIN FACEBOOK", getText('login', 'loginSuccess'));
 
+require("./autoJoin.js")(api);
+
 // ================= AUTO NOTIFY ADMIN ================= //
 
 const myUID = "61588161951831"; // 👉 তোমার numeric UID বসাও
