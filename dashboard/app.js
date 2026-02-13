@@ -281,8 +281,9 @@ app.post("/switchAccount", isAuthenticated, isAdmin, (req, res) => {
         res.json({ status: "Switching..." });
 
         res.on("finish", () => {
-            process.exit(2);
-        });
+    console.log("Restart triggered");
+    setTimeout(() => process.exit(0), 1000);
+});
 
     } catch (err) {
         res.json({ status: "Switch failed" });
@@ -317,15 +318,22 @@ app.post("/uploadcookie", isAuthenticated, isAdmin, (req, res) => {
                         return res.status(500).send(getText("app", "serverError"));
         });
 
-        const PORT = process.env.PORT || config.dashBoard.port || config.serverUptime.port || 3001;
+        const PORT = process.env.PORT || 3001;
+
+server.listen(PORT, () => {
+    console.log("=================================");
+    console.log(`🚀 Dashboard running on port ${PORT}`);
+    console.log("=================================");
+});
         let dashBoardUrl = `https://${process.env.REPL_OWNER
                 ? `${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
                 : process.env.API_SERVER_EXTERNAL == "https://api.glitch.com"
                         ? `${process.env.PROJECT_DOMAIN}.glitch.me`
                         : `localhost:${PORT}`}`;
         dashBoardUrl.includes("localhost") && (dashBoardUrl = dashBoardUrl.replace("https", "http"));
-        await server.listen(PORT);
-        utils.log.info("DASHBOARD", `Dashboard is running: ${dashBoardUrl}`);
+        server.listen(PORT, () => {
+    utils.log.info("DASHBOARD", `Dashboard running on port ${PORT}`);
+});
         if (config.serverUptime.socket.enable == true)
                 require("../bot/login/socketIO.js")(server);
 };
