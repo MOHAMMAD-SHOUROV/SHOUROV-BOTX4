@@ -245,6 +245,7 @@ app.get("/neon", isAuthenticated, isAdmin, (req, res) => {
         app.use("/dashboard", dashBoardRoute);
         app.use("/verifyfbid", verifyFbidRoute);
         app.use("/api", apiRouter);
+app.use(express.static(path.join(__dirname, "public")));
 
 // ================= CUSTOM PANEL =================
 
