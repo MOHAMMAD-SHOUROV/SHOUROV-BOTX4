@@ -125,6 +125,7 @@ module.exports = async (api) => {
 
         const isVideoFile = (mimeType) => videoExt.includes(mimeDB[mimeType]?.extensions?.[0]);
 
+const verifyRecaptcha = require("./utils/verifyRecaptcha");
         // ROUTES & MIDDLWARE
         const paramsForRoutes = {
     unAuthenticated, 
@@ -155,7 +156,6 @@ module.exports = async (api) => {
     isVerifyRecaptcha: verifyRecaptcha
 };
                 
-const verifyRecaptcha = require("./utils/verifyRecaptcha");
         const registerRoute = require("./routes/register.js")(paramsForRoutes);
         const loginRoute = require("./routes/login.js")(paramsForRoutes);
         const forgotPasswordRoute = require("./routes/forgotPassword.js")(paramsForRoutes);
