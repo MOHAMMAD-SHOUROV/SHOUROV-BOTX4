@@ -71,10 +71,48 @@ body{background:#030712;color:white}
 </div>
 
 <script>
-document.querySelectorAll('.toggle').forEach(t=>{
- t.onclick=()=>t.classList.toggle('active');
-});
-</script>
 
-</body>
-</html>
+const toggles = document.querySelectorAll('.toggle');
+
+const settingMap = [
+  "autoRestartWhenListenMqttError",
+  "adminOnly",
+  "videoDownloader",
+  "autoCaption"
+];
+
+// load settings
+async function loadSettings() {
+  const res = await fetch("/api/settings");
+  const data = await res.json();
+
+  toggles.forEach((toggle, index) => {
+    const key = settingMap[index];
+    if (data[key] === true)
+      toggle.classList.add("active");
+    else
+      toggle.classList.remove("active");
+  });
+}
+
+// toggle click
+toggles.forEach((toggle, index) => {
+  toggle.onclick = async () => {
+
+    toggle.classList.toggle("active");
+
+    const key = settingMap[index];
+    const value = toggle.classList.contains("active");
+
+    await fetch("/api/settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, value })
+    });
+
+  };
+});
+
+loadSettings();
+
+</script>
