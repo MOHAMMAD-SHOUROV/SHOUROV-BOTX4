@@ -5,7 +5,6 @@ const mimeDB = require("mime-db");
 const router = express.Router();
 const { exec } = require("child_process");
 const fs = require("fs-extra");
-const fs = require("fs");
 
 module.exports = function ({ isAuthenticated, isVeryfiUserIDFacebook, checkHasAndInThread, threadsData, drive, checkAuthConfigDashboardOfThread, usersData, createLimiter, middlewareCheckAuthConfigDashboardOfThread, isVideoFile }) {
 	const apiLimiter = createLimiter(1000 * 60 * 5, 10);
@@ -479,25 +478,6 @@ router.get("/commands", async (req, res) => {
         const result = commands.map(cmd => ({
             name: cmd,
             enabled: !banned[cmd]
-        }));
-
-        res.json(result);
-
-    } catch (err) {
-        res.status(500).json({ error: "Failed to load commands" });
-    }
-});
-
-router.get("/commands", (req, res) => {
-    try {
-
-        const commands = Array.from(global.GoatBot.commands.keys());
-
-        const disabled = global.GoatBot.configCommands.commandBanned || [];
-
-        const result = commands.map(cmd => ({
-            name: cmd,
-            enabled: !disabled.includes(cmd)
         }));
 
         res.json(result);
